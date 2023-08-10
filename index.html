@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <title>Banners Demo</title>
+        <link rel="stylesheet" href="./style.css">
+        <script type="importmap"> { "imports": {
+            "esmodule-banner": "./esmodule-banner.mjs"
+        } }</script>
+    </head>
+    <body>
+        <script type="module"> import 'esmodule-banner'; </script>
+        <module-banner></module-banner>
+        <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
+        <main>
+            <h1>ES Modules</h1>
+            <section>
+                <h2>What are ES Modules?</h2>
+                <p>While ES Modules (alternatively ESM) are formally defined in the <a href="https://262.ecma-international.org/6.0/#sec-modules">Language Specification</a>, they're more broadly a unified specification for module formats. Until very recently, with the advent of <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap">importmaps</a> in the browser, they were more a meta format for babel compilation (in an effort to "future proof" codebases) or at best a compilation format to bundle code into. As a result we've sat for years in a holding pattern, waiting.</p>
+                <h2>Why would I bother?</h2>
+                <p>The formats that landed aren't 100% compatible with each other, nor did the standards body include either a method for compatibility (other than shims) or deal with the very large body of browser objects that <b>already</b> have counterparts in the node world. This leaves developers with a way to write 'hello world' apps but no real way to dev with native imports in all environments. This is further compounded by the static checking of import statements.</p>
+                <p>Because most of the seats of the standards bodies are paid for by large organizations that have a vested interest in keeping developers dependent on their tooling and cloud services, it's up to the community to deliver the future ourselves.</p>
+                <h2>Cut to the swag...</h2>
+                <p>As a result this is no small feat to accomplish and deserves a little visibility. This site aims to make these types of sites more visible, as well as simplifying and centralizing the support scenarios and explanations to users.</p>
+            </section>
+            <footer>
+                <div>
+                    <h3>Reference</h3>
+                    <ul>
+                        <li><a href="https://262.ecma-international.org/6.0/#sec-modules">Modules Spec</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN Docs</a></li>
+                        <li><a href="https://nodejs.org/api/esm.html">Node.js Docs</a></li>
+                        <li><a href="https://www.sitepoint.com/understanding-es6-modules-via-their-history/">History</a></li>
+                        <li><a href="https://modern-web.dev/guides/going-buildless/es-modules/">Going Buildless</a></li>
+                        <li><a href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">Module Deep Dive</a></li>
+                        <li><a href="https://betterprogramming.pub/back-to-the-future-with-es-modules-js-without-build-ee2c207a4439">Back to the Future</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="tools.html">Get a Banner</a></li>
+                        <li><a href="https://github.com/environment-safe">@environment-safe</a></li>
+                        <li><a href="https://www.npmjs.com/package/@open-automaton/moka">moka</a></li>
+                        <li><a href="https://generator.jspm.io/">create importmap</a></li>
+                        <li><a href="https://www.npmjs.com/package/wing-kong">wing-kong</a></li>
+                        <li><a href="https://github.com/chase-moskal/importly">importly</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Examples</h3>
+                    <ul>
+                        <li><a href="https://musicbox.fun/">MusicBox</a>[<a href="https://www.bryanbraun.com/2020/10/23/es-modules-in-production-my-experience-so-far/">blog</a>]</li>
+                        <li><a href="https://khrome.github.io/image-booth/">image-booth</a></li>
+                        <li><a href="https://www.runpkg.com/">RUNPKG</a></li>
+                        <li><a href="https://philipwalton.com/">Phillip Walton</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="build.html">Build</a></li>
+                        <li><a href="formats.html">Formats</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

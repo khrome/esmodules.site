@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "NeutrafaceTextBold";
+  src:
+    local("Neutraface Text Bold"),
+    url("fonts/neutraface-text-bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "Raleway";
+  src:
+    local("Raleway Light"),
+    url("fonts/raleway-light.ttf") format("truetype");
+}
+h1{
+    background: url('./images/jsm-logo.png') no-repeat center center local; 
+    background-size: 200px 80px; 
+    width: 200px;
+    height: 80px; 
+    display:inline-block;
+    color: transparent;
+    user-select: none;
+}
+h1, h2, h3{
+    font-family: "NeutrafaceTextBold";
+}
+
+p, li{
+    font-family: "Raleway";
+}
+
+body{
+    margin:0px;
+    background-color: #EEEE00;
+    background-image: linear-gradient(90deg,rgba(255,255,255,.07) 50%,transparent 50%),linear-gradient(90deg,rgba(255,255,255,.13) 50%,transparent 50%),linear-gradient(90deg,transparent 50%,rgba(255,255,255,.17) 50%),linear-gradient(90deg,transparent 50%,rgba(255,255,255,.19) 50%);
+    background-size: 39px,87px,111px,159px
+}
+
+main{
+    max-width: 640px;
+    padding: 20px;
+    background-color: #EEEEEE;
+}
+
+footer{
+    display:flex;
+    width: 100%;
+}
+footer div{
+    flex-direction: row;
+    min-width:25%;
+}
+
+footer li{
+    list-style-type: none;
+}
+
+footer ul{
+    padding-left:0;
+}

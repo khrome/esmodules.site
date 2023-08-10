@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+open http://localhost:8082/index.html; npx http-server -p 8082
