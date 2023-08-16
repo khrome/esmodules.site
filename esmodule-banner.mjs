@@ -19,6 +19,26 @@ export class Banner extends HTMLElement {
         const margin  = 3.23+diff/4; //3.23
         //const w = width + margin + 0.04;  //15.38
         const lineSize  = 1.54; //1.54
+        const firefox = this.getAttribute('firefox') || 'untested';
+        const safari = this.getAttribute('safari') || 'untested';
+        const chrome = this.getAttribute('chrome') || 'untested';
+        const edge = this.getAttribute('edge') || 'untested';
+        const mechanism = this.getAttribute('mechanism');
+        const support = this.getAttribute('support');
+        const toolchain = this.getAttribute('toolchain');
+        const format = this.getAttribute('format');
+        const segmented = this.getAttribute('format');
+        this._config = {
+            firefox,
+            safari,
+            chrome,
+            edge,
+            mechanism,
+            support,
+            toolchain,
+            format,
+            segmented
+        }
         style.innerHTML = `.ribbon {
           width: ${width}em;
           height: ${height}em;
@@ -169,7 +189,54 @@ export class ModuleBanner extends Banner {
         options.text = 'Native ES Modules';
         options.inset = 23;
         super(options);
-        this._container.setAttribute('href', 'http://esmodules.site');
+        this._container.setAttribute('href', this.getURL());
+    }
+    
+    getURL(){
+        const parts = {};
+        switch(this._config.firefox){
+            case 'unsupported': parts['ff'] = 'n'; break;
+            case 'supported': parts['ff'] = 'y'; break;
+            case 'fallback': parts['ff'] = 'f'; break;
+            case 'untested': parts['ff'] = 'u'; break;
+        }
+        switch(this._config.chrome){
+            case 'unsupported': parts['cr'] = 'n'; break;
+            case 'supported': parts['cr'] = 'y'; break;
+            case 'fallback': parts['cr'] = 'f'; break;
+            case 'untested': parts['cr'] = 'u'; break;
+        }
+        switch(this._config.safari){
+            case 'unsupported': parts['sf'] = 'n'; break;
+            case 'supported': parts['sf'] = 'y'; break;
+            case 'fallback': parts['sf'] = 'f'; break;
+            case 'untested': parts['sf'] = 'u'; break;
+        }
+        switch(this._config.edge){
+            case 'unsupported': parts['ed'] = 'n'; break;
+            case 'supported': parts['ed'] = 'y'; break;
+            case 'fallback': parts['ed'] = 'f'; break;
+            case 'untested': parts['ed'] = 'u'; break;
+        }
+        switch(this._config.support){
+            case 'redirect': parts['rd'] = 'on'; break;
+            case 'inline': parts['in'] = 'on'; break;
+        }
+        switch(this._config.mechanism){
+            case 'standalone': parts['st'] = 'on'; break;
+            case 'import': parts['im'] = 'on'; break;
+            case 'compiled': parts['cp'] = 'on'; break;
+            case 'bundled': parts['bd'] = 'on'; break;
+        }
+        switch(this._config.format){
+            case 'global': parts['fm'] = 'g'; break;
+            case 'definition': parts['fm'] = 'd'; break;
+            case 'module': parts['fm'] = 'm'; break;
+            case 'namespaced': parts['fm'] = 'i'; break;
+        }
+        return window.location.protocol+'://esmodules.site/banner.html?'+Object.keys(parts).map((key)=>{
+            return `${key}=${parts[key]}`;
+        }).join('&')
     }
 }
 customElements.define('module-banner', ModuleBanner);

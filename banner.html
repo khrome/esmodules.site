@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <title>Banners Demo</title>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/solarized.min.css">
+        <script type="importmap"> { "imports": {
+            "esmodule-banner": "./esmodule-banner.mjs"
+        } }</script>
+    </head>
+    <body>
+        <script type="module"> import 'esmodule-banner'; </script>
+        <module-banner></module-banner>
+        <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
+        <main>
+            <h1>ES Modules</h1>
+            <section>
+                <h2 id="sectionheader">Get an ES Module banner</h2>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/http/http.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlembedded/htmlembedded.min.js"></script>
+                <script>
+                    //const localdomains = ['localhost', 'esmodules.site', 'khrome.github.io'];
+                    const localdomains = [];
+                    const header = document.getElementById('sectionheader');
+                    const args = new URLSearchParams(window.location.search);
+                    const browsers = {};
+                    const checkBrowser = (code, name)=>{
+                        let arg = null;
+                        if(arg = args.get(code)){
+                            console.log(code, name, arg)
+                            switch(arg){
+                                case 'n':
+                                    browsers[name] = 'unsupported';
+                                    break;
+                                case 'y':
+                                    browsers[name] = 'supported';
+                                    break;
+                                case 'f':
+                                    browsers[name] = 'fallback';
+                                    break;
+                                case 'u':
+                                    browsers[name] = 'untested';
+                                    break;
+                            }
+                        }else{
+                            browsers[name] = 'unsupported';
+                        }
+                    };
+                    checkBrowser('ff', 'firefox');
+                    checkBrowser('cr', 'chrome');
+                    checkBrowser('sf', 'safari');
+                    checkBrowser('ed', 'edge');
+                    let support = 'none';
+                    if(args.get('rd')) support = 'redirect';
+                    if(args.get('in')) support = 'inline';
+                    let mechanism = 'none';
+                    if(args.get('st')) mechanism = 'standalone';
+                    if(args.get('im')) mechanism = 'import';
+                    if(args.get('cp')) mechanism = 'compiled';
+                    if(args.get('bd')) mechanism = 'bundled';
+                    let toolchain = args.get('br');
+                    switch(toolchain){
+                        case 'b': toolchain = 'babel'; break;
+                        case 'w': toolchain = 'webpack'; break;
+                        case 'r': toolchain = 'browserify'; break;
+                        case 'p': toolchain = 'parcel'; break;
+                    }
+                    let format = args.get('fm');
+                    switch(format){
+                        case 'g': format = 'global'; break;
+                        case 'd': format = 'definition'; break;
+                        case 'm': format = 'module'; break;
+                        case 'i': format = 'namespaced'; break;
+                    }
+                    let segmented = args.get('sg') === 'on'?true:false;
+                    window.parameters = {
+                        browsers,
+                        support,
+                        mechanism,
+                        toolchain,
+                        format,
+                        segmented
+                    }
+                    const referrer = new URL(document.referrer);
+                    console.log('???', referrer)
+                    if(localdomains.indexOf(referrer.hostname) === -1){
+                        console.log('local', referrer.hostname, window.parameters);
+                        header.innerHTML = `Your settings:`;
+                    }else{
+                        console.log('not', referrer.hostname, window.parameters);
+                        header.innerHTML = `${window.location.hostname} is delivered using:`;
+                    }
+                </script>
+                <table id="matrix">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Chrome</th>
+                            <th>Firefox</th>
+                            <th>Safari</th>
+                            <th>Edge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>import</td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+                        <tr>
+                            <td>importmap</td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+                        <tr>
+                            <td>delivery</td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                            <td> - </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="local">
+                    <div class="block"><p>
+                            The es modules ribbon is built so it can coexist with existing, popular "fork me" ribbons, but it can also produce one without another library. Copy the following code onto your page to display both a fork me ribbon and and an es modules ribbon.
+                        </p>
+<div class="codewrap"><div class="code" id="codeplusgit"><script type="importmap"> { "imports": {
+    "esmodule-banner": "https://esmodules.site/esmodule-banner.mjs"
+} }</script>
+<module-banner></module-banner>
+<fork-banner url="https://your.site/url"></fork-banner></div></div>
+                    </div>
+                    <div class="block"><p>
+                            This code is for just the standalone es modules ribbon, with the settings you provided (Though it's spacing is such that it is compatible with other ribbons).
+                        </p>
+<div class="codewrap"><div class="code" id="code"><script type="importmap"> { "imports": {
+    "esmodule-banner": "https://esmodules.site/esmodule-banner.mjs"
+} }</script>
+<module-banner></module-banner></div></div>
+                    </div></div>
+                <script>
+                    const elements = document.getElementsByClassName('code');
+                    CodeMirror.commands.autocomplete = function(cm) {
+                        CodeMirror.showHint(cm, CodeMirror.hint.html);
+                    }
+                    window.onload = function() {
+                        [].forEach.call(elements, (el)=>{
+                            CodeMirror(el, {
+                                mode: "text/html",
+                                theme: "neonsyntax",
+                                lineWrapping: true,
+                                lineNumbers: true,
+                                styleActiveLine: true,
+                                matchBrackets: true,
+                                extraKeys: {
+                                    "Ctrl-Space": "autocomplete"
+                                },
+                                value: el.innerHTML
+                            });
+                        });
+                    };
+                </script>
+                <script>
+                    
+                </script>
+            </section>
+            <footer>
+                <div>
+                    <h3>Reference</h3>
+                    <ul>
+                        <li><a href="https://262.ecma-international.org/6.0/#sec-modules">Modules Spec</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN Docs</a></li>
+                        <li><a href="https://nodejs.org/api/esm.html">Node.js Docs</a></li>
+                        <li><a href="https://www.sitepoint.com/understanding-es6-modules-via-their-history/">History</a></li>
+                        <li><a href="https://modern-web.dev/guides/going-buildless/es-modules/">Going Buildless</a></li>
+                        <li><a href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">Module Deep Dive</a></li>
+                        <li><a href="https://betterprogramming.pub/back-to-the-future-with-es-modules-js-without-build-ee2c207a4439">Back to the Future</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="get.html">Get a Banner</a></li>
+                        <li><a href="https://github.com/environment-safe">@environment-safe</a></li>
+                        <li><a href="https://www.npmjs.com/package/@open-automaton/moka">moka</a></li>
+                        <li><a href="https://generator.jspm.io/">create importmap</a></li>
+                        <li><a href="https://www.npmjs.com/package/wing-kong">wing-kong</a></li>
+                        <li><a href="https://github.com/chase-moskal/importly">importly</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Examples</h3>
+                    <ul>
+                        <li><a href="https://musicbox.fun/">MusicBox</a>[<a href="https://www.bryanbraun.com/2020/10/23/es-modules-in-production-my-experience-so-far/">blog</a>]</li>
+                        <li><a href="https://khrome.github.io/image-booth/">image-booth</a></li>
+                        <li><a href="https://www.runpkg.com/">RUNPKG</a></li>
+                        <li><a href="https://philipwalton.com/">Phillip Walton</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="build.html">Build</a></li>
+                        <li><a href="formats.html">Formats</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

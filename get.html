@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head>
+        <title>Banners Demo</title>
+        <link rel="stylesheet" href="./style.css">
+        <script type="importmap"> { "imports": {
+            "esmodule-banner": "./esmodule-banner.mjs"
+        } }</script>
+    </head>
+    <body>
+        <script type="module"> import 'esmodule-banner'; </script>
+        <module-banner></module-banner>
+        <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
+        <main>
+            <h1>ES Modules</h1>
+            <section>
+                <h2>Get an ES Module banner</h2>
+                <form action="banner.html" method="get">
+                    <fieldset>
+                        <legend>Support</legend>
+                        <div class="canvas">
+                            <label for="rd">Redirect Fallback</label>
+                            <input id="rd" name="rd" type="checkbox">
+                            <p>
+                                You support a fallback which redirects for unsupported browsers.
+                            </p>
+                            <label for="in">Inline Fallback</label>
+                            <input id="in" name="in" type="checkbox">
+                            <p>
+                                You support a fallback which loads and alternative experience inline when lack of support is detected.
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Browser Support</legend>
+                        <div class="canvas">
+                            <label for="ff">Firefox</label>
+                            <select id="ff" name="ff">
+                                <option value="n">Not supported</option>
+                                <option value="y">Supported</option>
+                                <option value="f">Fallback</option>
+                                <option value="u">Untested</option>
+                            </select>
+                            <p>
+                                The <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> browser produced by <a href="https://www.mozilla.org/">Mozilla</a>
+                            </p>
+                            <label for="cr">Chrome</label>
+                            <select id="cr" name="cr">
+                                <option value="n">Not supported</option>
+                                <option value="y">Supported</option>
+                                <option value="f">Fallback</option>
+                                <option value="u">Untested</option>
+                            </select>
+                            <p>
+                                The <a href="https://www.google.com/chrome/dr/download/">Chrome</a> browser produced by <a href="https://www.google.com/">Google</a>
+                            </p>
+                            <label for="sf">Safari</label>
+                            <select id="sf" name="sf">
+                                <option value="n">Not supported</option>
+                                <option value="y">Supported</option>
+                                <option value="f">Fallback</option>
+                                <option value="u">Untested</option>
+                            </select>
+                            <p>
+                                The <a href="https://www.apple.com/safari/">Safari</a> browser produced by <a href="https://www.apple.com/">Apple</a>
+                            </p>
+                            <label for="ed">Edge</label>
+                            <select id="ed" name="ed">
+                                <option value="n">Not supported</option>
+                                <option value="y">Supported</option>
+                                <option value="f">Fallback</option>
+                                <option value="u">Untested</option>
+                            </select>
+                            <p>
+                                The <a href="https://www.microsoft.com/en-us/edge/download">Edge</a> browser produced by <a href="https://www.microsoft.com/">Microsoft</a>
+                            </p>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Mechanism</legend>
+                        <div class="canvas">
+                            <label for="st">Standalone</label>
+                            <input id="st" name="st" type="checkbox">
+                            <p>
+                                You write everything inside one or more modules which are directly included or inline in the HTML, and publish that directly.
+                            </p>
+                            <label for="im">Import Maps</label>
+                            <input id="im" name="im" type="checkbox">
+                            <p>
+                                You use a variety of dependencies, which are all native es modules and include them using an importmap.
+                            </p>
+                            <label for="cp">Compiled</label>
+                            <input id="cp" name="cp" type="checkbox">
+                            <p>
+                                You use browser compatible modules in your development process and can run locally without build, but for delivery you compile them to an output format.
+                            </p>
+                            <div id="compiled">
+                                <label for="fm">Format</label>
+                                <select id="fm" name="fm">
+                                    <option value="g">Global Javascript</option>
+                                    <option value="d">UMD/AMD</option>
+                                    <option value="m">ES Modules</option>
+                                    <option value="i">Global Import</option>
+                                </select>&nbsp; 
+                                ( <label for="sg">Segmented</label>
+                                <input id="sg" name="sg" type="checkbox"> )
+                                <p>
+                                    The target format you export for the browser.
+                                </p>
+                            </div>
+                            <label for="bd">Bundled</label>
+                            <input id="bd" name="bd" type="checkbox">
+                            <p>
+                                You use a variety of dependencies, which are all native es modules and include them using an importmap.
+                            </p>
+                            <div id="bundled">
+                                <label for="br">Toolchain</label>
+                                <select id="br" name="ed">
+                                    <option value="n">Not specified</option>
+                                    <option value="b">Babel</option>
+                                    <option value="w">Webpack</option>
+                                    <option value="r">Browserify</option>
+                                    <option value="p">Parcel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset><br>
+                    <div class="floating-button"><input class="floating-button" name="submit" type="submit" value="Get Banner"></div>
+                    <script>
+                        const selectOneOf = (elList)=>{
+                            elList.forEach((el)=>{
+                                el.addEventListener('change', (e)=>{
+                                    if(el.checked){
+                                        elList.forEach((otherEl)=>{
+                                            if(otherEl.id === el.id) return;
+                                            otherEl.checked = false;
+                                            if(otherEl.refreshDeps){
+                                                otherEl.refreshDeps();
+                                            }
+                                        });
+                                    }
+                                })
+                            });
+                        };
+                        const dependentOn = (checklistEl, id)=>{
+                            const el = document.getElementById(id);
+                            const handler = ()=>{
+                                if(checklistEl.checked){
+                                    el.style.display = 'block';
+                                }else{
+                                    el.style.display = 'none';
+                                }
+                            };
+                            checklistEl.refreshDeps = handler;
+                            checklistEl.addEventListener('change', handler);
+                            handler();
+                        };
+                        const standalone = document.getElementById('st');
+                        const imported = document.getElementById('im');
+                        const compiled = document.getElementById('cp');
+                        const bundled = document.getElementById('bd');
+                        
+                        const redirect = document.getElementById('rd');
+                        const inline = document.getElementById('in');
+                        selectOneOf([ redirect, inline ]);
+                        selectOneOf([ standalone, imported, compiled, bundled ]);
+                        dependentOn(compiled, 'compiled');
+                        dependentOn(bundled, 'bundled');
+                    </script>
+                </form>
+            </section>
+            <footer>
+                <div>
+                    <h3>Reference</h3>
+                    <ul>
+                        <li><a href="https://262.ecma-international.org/6.0/#sec-modules">Modules Spec</a></li>
+                        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN Docs</a></li>
+                        <li><a href="https://nodejs.org/api/esm.html">Node.js Docs</a></li>
+                        <li><a href="https://www.sitepoint.com/understanding-es6-modules-via-their-history/">History</a></li>
+                        <li><a href="https://modern-web.dev/guides/going-buildless/es-modules/">Going Buildless</a></li>
+                        <li><a href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">Module Deep Dive</a></li>
+                        <li><a href="https://betterprogramming.pub/back-to-the-future-with-es-modules-js-without-build-ee2c207a4439">Back to the Future</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="get.html">Get a Banner</a></li>
+                        <li><a href="https://github.com/environment-safe">@environment-safe</a></li>
+                        <li><a href="https://www.npmjs.com/package/@open-automaton/moka">moka</a></li>
+                        <li><a href="https://generator.jspm.io/">create importmap</a></li>
+                        <li><a href="https://www.npmjs.com/package/wing-kong">wing-kong</a></li>
+                        <li><a href="https://github.com/chase-moskal/importly">importly</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Examples</h3>
+                    <ul>
+                        <li><a href="https://musicbox.fun/">MusicBox</a>[<a href="https://www.bryanbraun.com/2020/10/23/es-modules-in-production-my-experience-so-far/">blog</a>]</li>
+                        <li><a href="https://khrome.github.io/image-booth/">image-booth</a></li>
+                        <li><a href="https://www.runpkg.com/">RUNPKG</a></li>
+                        <li><a href="https://philipwalton.com/">Phillip Walton</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="build.html">Build</a></li>
+                        <li><a href="formats.html">Formats</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

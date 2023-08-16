@@ -19,25 +19,163 @@ h1{
     color: transparent;
     user-select: none;
 }
-h1, h2, h3{
+h1, h2, h3, form legend, form label, .floating-button input{
     font-family: "NeutrafaceTextBold";
+}
+#matrix{
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+form legend{
+  display:block;
+  font-size: 1.5em;
+  margin-top: -1.5em;
+  position:absolute;
+  color: white;
+  text-shadow: 
+    -2px -2px 0 #000, 
+    -2px 0px 0 #000, 
+    2px -2px 0 #000, 
+    2px 0px 0 #000, 
+    -2px 2px 0 #000, 
+    0px 2px 0 #000, 
+    2px 2px 0 #000,
+    0px -2px 0 #000;
+}
+.canvas{
+  border-radius: 1em;
+  background-color: white;
+  border: 1px solid black;
+  padding: 1em;
+}
+form fieldset{
+  margin-top: 2em;
+  border-radius: 2em;
+  padding: 1em;
+  background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+    linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+    linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+  background-size: 6px 6px;
+}
+
+.floating-button input{
+  background: white;
+}
+
+.floating-button input:hover{
+  background: #EEEE00;
+}
+
+.floating-button input:active{
+  background: #000000;
+  color: white;
+}
+
+.floating-button, .codewrap{
+  border: 1px solid black;
+  border-radius: 2em;
+  padding: 1em;
+}
+
+.CodeMirror {
+    font-size: 15px;
+    width: 100% ;
+    height: 180px !important;
+}
+
+
+.CodeMirror{
+  border-top-right-radius: 1.5em;
+  border-bottom-right-radius: 1.5em;
+  
+}
+.CodeMirror-sizer > div{
+  /*
+  box-shadow: inset 1px 1px black, inset -1px 1px black, inset 1px -1px black, inset -1px -1px black;
+  */
+}
+.CodeMirror-gutters{
+  border-right: 1px solid black !important;
+}
+.CodeMirror-scroll, .CodeMirror-wrap{
+  box-shadow: inset 1px 1px black, inset -1px 1px black, inset 1px -1px black, inset -1px -1px black;
+}
+.CodeMirror-sizer{
+  border-bottom-right-radius: 1.5em;
+  border-bottom-right-radius: 1.5em;
+  bottom-border: 1px solid black;
+}
+.CodeMirror-lines{
+  border-top-right-radius: 1.5em;
+  border-bottom-right-radius: 1.5em;
+}
+
+.floating-button:active{
+  border: 1px solid black;
+  border-radius: 2em;
+  padding: 1em;
+  float:right;
+  background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+    linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+    linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+  background-size: 6px 6px;
+}
+
+form{
+  margin: 40px;
 }
 
 p, li{
     font-family: "Raleway";
 }
-
+html{
+  min-height: 100vh;
+}
 body{
+    min-height: 100vh;
     margin:0px;
     background-color: #EEEE00;
     background-image: linear-gradient(90deg,rgba(255,255,255,.07) 50%,transparent 50%),linear-gradient(90deg,rgba(255,255,255,.13) 50%,transparent 50%),linear-gradient(90deg,transparent 50%,rgba(255,255,255,.17) 50%),linear-gradient(90deg,transparent 50%,rgba(255,255,255,.19) 50%);
     background-size: 39px,87px,111px,159px
 }
 
+.codewrap{
+  position: static;
+  display: inline-block;
+  margin-left: 100px;
+  margin-top: 1em;
+  background: #f7f7f7
+}
+
+main section .block{
+  border: 1px solid black;
+  margin-top: 2em;
+  border-radius: 2em;
+  padding: 1em;
+  background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+    linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+    linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+  background-size: 6px 6px;
+}
+
+main section .block p{
+  border: 1px solid black;
+  border-radius: 2em;
+  padding: 1em;
+  margin:0px;
+  background: white;
+}
+
 main{
+    min-height: calc(100vh - 40px);
     max-width: 640px;
     padding: 20px;
     background-color: #EEEEEE;
+}
+
+main section{
+    min-height: calc(100vh - 400px);
 }
 
 footer{
