@@ -59,25 +59,6 @@ form fieldset{
   background-size: 6px 6px;
 }
 
-.floating-button input{
-  background: white;
-}
-
-.floating-button input:hover{
-  background: #EEEE00;
-}
-
-.floating-button input:active{
-  background: #000000;
-  color: white;
-}
-
-.floating-button, .codewrap{
-  border: 1px solid black;
-  border-radius: 2em;
-  padding: 1em;
-}
-
 .CodeMirror {
     font-size: 15px;
     width: 100% ;
@@ -111,6 +92,82 @@ form fieldset{
   border-bottom-right-radius: 1.5em;
 }
 
+.floating-button input{
+  background: white;
+  border: 1px solid black;
+  border-radius: 0.8em;
+  padding: 1em;
+}
+
+.floating-button input:hover{
+  background: #EEEE00;
+}
+
+.floating-button input:active{
+  background: #000000;
+  color: white;
+}
+
+.floating-button, .codewrap{
+  border: 1px solid black;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+.floating-right{
+  float:right;
+}
+
+.floating-left{
+  float:left;
+}
+
+.foot-attached{
+  margin-left: 520px;
+  position:absolute;
+  font-size: 0.5em;
+  width:50px;
+  height:50px;
+  margin-top:-85px;
+  z-index: 10;
+}
+
+.foot-attached::before{
+  content: '⧉';
+  position: absolute;
+  display: block;
+  height: 100px;
+  width: 100px;
+  margin-left:5px;
+  margin-top:-8px;
+  font-size: 6em;
+  pointer-events: none;
+}
+.foot-attached::after{
+  content: 'copy';
+  font-family: "NeutrafaceTextBold";
+  position: absolute;
+  display: block;
+  font-size: 2em;
+  width: 50px;
+  margin-top:-20px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.foot-attached:active::after, .foot-attached:active::before{
+  color: white;
+}
+
+.floating-button{
+  padding: 0.5em;
+  background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+      linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+      linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+    background-size: 6px 6px;
+  }
+}
+
 .floating-button:active{
   border: 1px solid black;
   border-radius: 2em;
@@ -121,6 +178,15 @@ form fieldset{
     linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
   background-size: 6px 6px;
 }
+
+.foot-attached input{
+  width:50px;
+  height:50px;
+  line-height: 1em;
+  font-size: 2em;
+  overflow: hidden;
+}
+
 
 form{
   margin: 40px;
@@ -143,7 +209,6 @@ body{
 .codewrap{
   position: static;
   display: inline-block;
-  margin-left: 100px;
   margin-top: 1em;
   background: #f7f7f7
 }
@@ -159,12 +224,39 @@ main section .block{
   background-size: 6px 6px;
 }
 
-main section .block p{
+main section .block p, main section .block td{
+  border: 1px solid black;
+  border-radius: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin:0px;
+  background: white;
+}
+
+main section .block p, main section .block td{
   border: 1px solid black;
   border-radius: 2em;
   padding: 1em;
   margin:0px;
   background: white;
+}
+
+main section .block td{
+  width: 10px;
+}
+
+main section .block th{
+  position: relative;
+}
+
+main section .block td:nth-child(1){
+  background: none;
+  border: 1px none;
+  font-family: "NeutrafaceTextBold";
+  color: white;
+  font-size: 1.5em;
+  padding: 0px;
+  text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
 }
 
 main{

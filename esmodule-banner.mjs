@@ -234,9 +234,9 @@ export class ModuleBanner extends Banner {
             case 'module': parts['fm'] = 'm'; break;
             case 'namespaced': parts['fm'] = 'i'; break;
         }
-        return window.location.protocol+'://esmodules.site/banner.html?'+Object.keys(parts).map((key)=>{
+        return window.location.protocol+'//esmodules.site/banner.html?'+Object.keys(parts).map((key)=>{
             return `${key}=${parts[key]}`;
-        }).join('&')
+        }).join('&');
     }
 }
 customElements.define('module-banner', ModuleBanner);
