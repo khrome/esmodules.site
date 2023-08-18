@@ -21,11 +21,12 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/http/http.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlembedded/htmlembedded.min.js"></script>
                 <script type="module">
-                    import { getConfig } from './utils.js';
-                    window.parameters = getConfig(['localhost', 'esmodules.site', 'khrome.github.io']);
-                    //const localdomains = ['localhost', 'esmodules.site', 'khrome.github.io'];
+                    import { getConfig } from './util.js';
+                    const localdomains = ['localhost', 'esmodules.site', 'khrome.github.io'];
+                    window.parameters = getConfig(localdomains);
+                    //window.parameters = getConfig([ ]);
                     
-                    
+                    const header = document.getElementById('sectionheader');
                     const referrer = new URL(document.referrer);
                     if(localdomains.indexOf(referrer.hostname) === -1){
                         console.log('local', referrer.hostname, window.parameters);
@@ -91,7 +92,7 @@
                     </table>
                 </div>
                 <div id="local">
-                    <div class="block"><p>
+                    <div class="block"><h2 class="block-title">Get Both Ribbons</h2><p>
                             The es modules ribbon is built so it can coexist with existing, popular "fork me" ribbons, but it can also produce one without another library. Copy the following code onto your page to display both a fork me ribbon and and an es modules ribbon.
                         </p>
 <div class="codewrap"><div class="code" id="codeplusgit"><script type="importmap"> { "imports": {
@@ -99,38 +100,68 @@
 } }</script>
 <module-banner></module-banner>
 <fork-banner url="https://your.site/url"></fork-banner></div></div>
-                        <div class="floating-button foot-attached"><input name="submit" type="submit" value=""></div>
+                        <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
                     </div>
-                    <div class="block"><p>
+                    <div class="block"><h2 class="block-title">Get a Ribbon</h2><p>
                             This code is for just the standalone es modules ribbon, with the settings you provided (Though it's spacing is such that it is compatible with other ribbons).
                         </p>
 <div class="codewrap"><div class="code" id="code"><script type="importmap"> { "imports": {
     "esmodule-banner": "https://esmodules.site/esmodule-banner.mjs"
 } }</script> 
 <module-banner></module-banner></div></div>
-                    <div class="floating-button foot-attached"><input name="submit" type="submit" value=""></div>
+                    <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
                     </div></div>
-                <script>
-                    const environmentMap = {
-                        "chrome":2,
-                        "safari":4,
-                        "firefox":3,
-                        "edge":5,
-                        "node.js":6
-                    };
-                    const settingMap = {
-                        "import": 1,
-                        "importmap":2,
-                        "delivery":3
-                    };
-                    const grid = (environment, setting)=>{
-                        const col = environmentMap[environment];
-                        const row = settingMap[setting];
-                        const results = document.querySelector(`table#matrix tr:nth-of-type(${row}) td:nth-of-type(${col})`);
-                        return results;
-                    };
+                <script type="module">
+                    import { grid } from './util.js';
                     
-                    grid("node.js", "importmap").innerHTML = '✔';
+                    console.log(parameters);
+                    Object.keys(parameters.browsers).forEach((browserName)=>{
+                        if(parameters.mechanism === 'standalone'){
+                            switch(parameters.browsers[browserName]){
+                                case 'supported':
+                                    grid(browserName, "import").innerHTML = '✔';
+                                    break;
+                                case 'unsupported':
+                                    grid(browserName, "import").innerHTML = 'X';
+                                    break;
+                                case 'fallback':
+                                    grid(browserName, "import").innerHTML = '√';
+                                    break;
+                                case 'untested':
+                                    grid(browserName, "import").innerHTML = '?';
+                                    break;
+                            }
+                            
+                        }else{
+                            if(parameters.mechanism === 'import'){
+                                switch(parameters.browsers[browserName]){
+                                    case 'supported':
+                                        grid(browserName, "import").innerHTML = '✔';
+                                        grid(browserName, "importmap").innerHTML = '✔';
+                                        break;
+                                    case 'unsupported':
+                                        grid(browserName, "import").innerHTML = 'X';
+                                        grid(browserName, "importmap").innerHTML = 'X';
+                                        break;
+                                    case 'fallback':
+                                        grid(browserName, "import").innerHTML = '√';
+                                        grid(browserName, "importmap").innerHTML = '√';
+                                        break;
+                                    case 'untested':
+                                        grid(browserName, "import").innerHTML = '?';
+                                        grid(browserName, "importmap").innerHTML = '?';
+                                        break;
+                                }
+                            }else{
+                                
+                            }
+                        }
+                        if(parameters.mechanism === 'importmap'){
+                            grid(browserName, "import").innerHTML = '✔';
+                            grid(browserName, "importmap").innerHTML = '✔';
+                        }
+                    });
+                    //grid("node.js", "importmap").innerHTML = '✔';
                     const elements = document.getElementsByClassName('code');
                     CodeMirror.commands.autocomplete = function(cm) {
                         CodeMirror.showHint(cm, CodeMirror.hint.html);

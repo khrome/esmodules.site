@@ -92,6 +92,14 @@ form fieldset{
   border-bottom-right-radius: 1.5em;
 }
 
+.block-title{
+  position: absolute;
+  margin-top: -1.5em;
+  margin-left: 0.5em;
+  text-shadow: 2px 2px black, -2px 2px black, 2px -2px black, -2px -2px black;
+  color: white;
+}
+
 .floating-button input{
   background: white;
   border: 1px solid black;
@@ -99,11 +107,11 @@ form fieldset{
   padding: 1em;
 }
 
-.floating-button input:hover{
+.floating-button input:hover, .floating-control input:hover{
   background: #EEEE00;
 }
 
-.floating-button input:active{
+.floating-button input:active, .floating-control input:active{
   background: #000000;
   color: white;
 }
@@ -113,6 +121,29 @@ form fieldset{
   border-radius: 1em;
   padding: 1em;
 }
+
+.floating-control{
+  border: 1px solid black;
+  border-radius: 2em;
+  padding: 2em;
+  padding: 0.5em;
+    background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+        linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+        linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+      background-size: 6px 6px;
+    }
+  }
+  
+  .floating-control:active{
+    border: 1px solid black;
+    border-radius: 2em;
+    padding: 1em;
+    float:right;
+    background: linear-gradient(45deg, #DDDDDC 12%, transparent 0, transparent 88%, #DDDDDC 0),
+      linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
+      linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
+    background-size: 6px 6px;
+  }
 
 .floating-right{
   float:right;
@@ -138,9 +169,9 @@ form fieldset{
   display: block;
   height: 100px;
   width: 100px;
-  margin-left:5px;
-  margin-top:-8px;
-  font-size: 6em;
+  margin-left:6px;
+  margin-top:-6px;
+  font-size: 5.5em;
   pointer-events: none;
 }
 .foot-attached::after{
@@ -184,6 +215,7 @@ form fieldset{
   height:50px;
   line-height: 1em;
   font-size: 2em;
+  border-radius: 1em;
   overflow: hidden;
 }
 
