@@ -28,6 +28,7 @@ export class Banner extends HTMLElement {
         const toolchain = this.getAttribute('toolchain');
         const format = this.getAttribute('format');
         const segmented = this.getAttribute('format');
+        const nodejs = this.getAttribute('nodejs');
         this._config = {
             firefox,
             safari,
@@ -37,7 +38,8 @@ export class Banner extends HTMLElement {
             support,
             toolchain,
             format,
-            segmented
+            segmented,
+            nodejs
         }
         style.innerHTML = `.ribbon {
           width: ${width}em;
@@ -218,6 +220,12 @@ export class ModuleBanner extends Banner {
             case 'fallback': parts['ed'] = 'f'; break;
             case 'untested': parts['ed'] = 'u'; break;
         }
+        switch(this._config.nodejs){
+            case 'unsupported': parts['nd'] = 'n'; break;
+            case 'supported': parts['nd'] = 'y'; break;
+            case 'fallback': parts['nd'] = 'f'; break;
+            case 'untested': parts['nd'] = 'u'; break;
+        }
         switch(this._config.support){
             case 'redirect': parts['rd'] = 'on'; break;
             case 'inline': parts['in'] = 'on'; break;
@@ -250,6 +258,7 @@ export class ForkBanner extends Banner {
         this._container.setAttribute('href', url);
         const parts = url.hostname.split('.');
         parts.pop();
+        console.log(parts, url.hostname)
         let name = parts.pop();
         name = name[0].toUpperCase()+name.substring(1);
         options.text = `Fork me on ${name}`;

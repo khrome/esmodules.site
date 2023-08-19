@@ -27,20 +27,23 @@
                     //window.parameters = getConfig([ ]);
                     
                     const header = document.getElementById('sectionheader');
-                    const referrer = new URL(document.referrer);
-                    if(localdomains.indexOf(referrer.hostname) === -1){
-                        console.log('local', referrer.hostname, window.parameters);
-                        header.innerHTML = `Your settings:`;
-                    }else{
-                        console.log('not', referrer.hostname, window.parameters);
-                        header.innerHTML = `${window.location.hostname} is delivered using:`;
+                    try{
+                        const referrer = new URL(document.referrer);
+                        if(localdomains.indexOf(referrer.hostname) === -1){
+                            console.log('local', referrer.hostname, window.parameters);
+                            header.innerHTML = `Your settings:`;
+                        }else{
+                            console.log('not', referrer.hostname, window.parameters);
+                            header.innerHTML = `${window.location.hostname} is delivered using:`;
+                        }
+                    }catch(ex){
+                        //no referrer?
                     }
                 </script>
-                <div class="block">
+                <div class="block matrix-block">
                     <table id="matrix">
                         <thead>
                             <tr>
-                                <th>&nbsp;</th>
                                 <th><img 
                                     src = "./images/browsers/chrome.svg" 
                                     alt="Chhrome Logo"
@@ -58,6 +61,10 @@
                                     alt="Edge Logo"
                                 ></th>
                                 <th><img 
+                                    src = "./images/browsers/generic.svg" 
+                                    alt="Legacy Browsers"
+                                ></th>
+                                <th><img 
                                     src = "./images/browsers/node.js.svg" 
                                     alt="Node.js Logo"
                                 ></th>
@@ -65,7 +72,7 @@
                         </thead>
                         <tbody>
                             <tr id="importrow">
-                                <td>import</td>
+                                <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
@@ -73,7 +80,7 @@
                                 <td> - </td>
                             </tr>
                             <tr id="maprow">
-                                <td>importmap</td>
+                                <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
@@ -81,7 +88,7 @@
                                 <td> - </td>
                             </tr>
                             <tr id="deliveryrow">
-                                <td>delivery</td>
+                                <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
                                 <td> - </td>
@@ -91,83 +98,67 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="block"><h2 id="info-title"class="block-title"></h2><p id="info-body">
+                    [overall summary TBD]
+                </p>
+                </div>
+                <div class="block">
+                    <fieldset>
+                        <label for="esribbon">Module Ribbon</label>
+                        <input name="esribbon" id="esribbon" type="checkbox">
+                        <label for="bothribbons">Module + Source</label>
+                        <input name="bothribbons" id="bothribbons" type="checkbox">
+                        <div style="float:right">
+                            <label for="isbrowser">HTML</label>
+                            <input name="isbrowser" id="isbrowser" type="checkbox">
+                            <label for="isnode">Javascript</label>
+                            <input name="isnode" id="isnode" type="checkbox">
+                            (
+                                <label for="isnode">Map</label>
+                                <input name="isnode" id="isnode" type="checkbox">
+                            )
+                        </div>
+                    </fieldset>
+                </div>
                 <div id="local">
                     <div class="block"><h2 class="block-title">Get Both Ribbons</h2><p>
                             The es modules ribbon is built so it can coexist with existing, popular "fork me" ribbons, but it can also produce one without another library. Copy the following code onto your page to display both a fork me ribbon and and an es modules ribbon.
                         </p>
-<div class="codewrap"><div class="code" id="codeplusgit"><script type="importmap"> { "imports": {
-    "esmodule-banner": "https://esmodules.site/esmodule-banner.mjs"
-} }</script>
-<module-banner></module-banner>
-<fork-banner url="https://your.site/url"></fork-banner></div></div>
+                        <div class="codewrap"><div 
+                            class="code" 
+                            id="codeplusgit" 
+                            settings='{ "isHTML": true, "includeForkRibbon": true }'
+                        ></div></div>
                         <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
                     </div>
                     <div class="block"><h2 class="block-title">Get a Ribbon</h2><p>
                             This code is for just the standalone es modules ribbon, with the settings you provided (Though it's spacing is such that it is compatible with other ribbons).
                         </p>
-<div class="codewrap"><div class="code" id="code"><script type="importmap"> { "imports": {
-    "esmodule-banner": "https://esmodules.site/esmodule-banner.mjs"
-} }</script> 
-<module-banner></module-banner></div></div>
+                        <div class="codewrap"><div 
+                            class="code" 
+                            id="code"
+                            settings='{ "isHTML": true }'
+                        ></div></div>
                     <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
-                    </div></div>
+                </div></div>
                 <script type="module">
-                    import { grid } from './util.js';
+                    import { setGrid, exampleCode } from './util.js';
                     
-                    console.log(parameters);
-                    Object.keys(parameters.browsers).forEach((browserName)=>{
-                        if(parameters.mechanism === 'standalone'){
-                            switch(parameters.browsers[browserName]){
-                                case 'supported':
-                                    grid(browserName, "import").innerHTML = '✔';
-                                    break;
-                                case 'unsupported':
-                                    grid(browserName, "import").innerHTML = 'X';
-                                    break;
-                                case 'fallback':
-                                    grid(browserName, "import").innerHTML = '√';
-                                    break;
-                                case 'untested':
-                                    grid(browserName, "import").innerHTML = '?';
-                                    break;
-                            }
-                            
-                        }else{
-                            if(parameters.mechanism === 'import'){
-                                switch(parameters.browsers[browserName]){
-                                    case 'supported':
-                                        grid(browserName, "import").innerHTML = '✔';
-                                        grid(browserName, "importmap").innerHTML = '✔';
-                                        break;
-                                    case 'unsupported':
-                                        grid(browserName, "import").innerHTML = 'X';
-                                        grid(browserName, "importmap").innerHTML = 'X';
-                                        break;
-                                    case 'fallback':
-                                        grid(browserName, "import").innerHTML = '√';
-                                        grid(browserName, "importmap").innerHTML = '√';
-                                        break;
-                                    case 'untested':
-                                        grid(browserName, "import").innerHTML = '?';
-                                        grid(browserName, "importmap").innerHTML = '?';
-                                        break;
-                                }
-                            }else{
-                                
-                            }
-                        }
-                        if(parameters.mechanism === 'importmap'){
-                            grid(browserName, "import").innerHTML = '✔';
-                            grid(browserName, "importmap").innerHTML = '✔';
-                        }
-                    });
-                    //grid("node.js", "importmap").innerHTML = '✔';
+                    // SETUP GRID
+                    setGrid(parameters);
+                    
+                    //SETUP CODE EDITORS
                     const elements = document.getElementsByClassName('code');
                     CodeMirror.commands.autocomplete = function(cm) {
                         CodeMirror.showHint(cm, CodeMirror.hint.html);
                     }
+                    const codeWithCurrentSettings = (settings)=>{
+                        console.log('settings', settings);
+                        return exampleCode(parameters, settings)
+                    }
                     window.onload = function() {
                         [].forEach.call(elements, (el)=>{
+                            console.log(el.getAttribute('settings'));
                             CodeMirror(el, {
                                 mode: "text/html",
                                 theme: "neonsyntax",
@@ -178,13 +169,12 @@
                                 extraKeys: {
                                     "Ctrl-Space": "autocomplete"
                                 },
-                                value: el.innerHTML
+                                value: codeWithCurrentSettings(
+                                    JSON.parse(el.getAttribute('settings') || '{}')
+                                )
                             });
                         });
                     };
-                </script>
-                <script>
-                    
                 </script>
             </section>
             <footer>

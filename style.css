@@ -25,6 +25,7 @@ h1, h2, h3, form legend, form label, .floating-button input{
 #matrix{
   width: 100%;
   padding: 10px;
+  table-layout:fixed;
   text-align: center;
 }
 form legend{
@@ -242,7 +243,8 @@ body{
   position: static;
   display: inline-block;
   margin-top: 1em;
-  background: #f7f7f7
+  background: #f7f7f7;
+  width: calc(100% - 2em);
 }
 
 main section .block{
@@ -254,18 +256,71 @@ main section .block{
     linear-gradient(135deg, transparent 37%, #DDDDCC 0, #DDDDCC 63%, transparent 0),
     linear-gradient(45deg, transparent 37%, #DDDDDC 0, #DDDDDC 63%, transparent 0) #CCCCBB;
   background-size: 6px 6px;
+  transition: padding-left 2s;
+}
+main section .block:hover tbody tr:nth-child(1) td:nth-child(1){
+  transition: all 2s;
+}
+/* import, importmap, delivery*/
+main section .block tbody tr td:nth-child(1)::before{
+  content:'';
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  opacity:0;
+  display: block;
+  position: absolute;
 }
 
-main section .block p, main section .block td{
+th img{
+  height: 70px;
+}
+
+main section .block:hover tbody tr td:nth-child(1)::before{
+  width: 150px;
+  text-align: right;
+  display: block;
+  position: absolute;
+  background: none;
+  border: 1px none;
+  font-family: "NeutrafaceTextBold";
+  color: white;
+  font-size: 1.2em;
+  padding: 0px;
+  margin-left: -170px;
+  -webkit-transition: all 2s;
+  transition: all 2s;
+  opacity: 1;
+  text-shadow: 2px 2px black, -2px 2px black, 2px -2px black, -2px -2px black;
+}
+
+main section .block:hover tbody tr:nth-child(1) td:nth-child(1)::before{
+  content:'import';
+}
+
+main section .block:hover tbody tr:nth-child(2) td:nth-child(1)::before{
+  content:'importmaps';
+}
+
+main section .block:hover tbody tr:nth-child(3) td:nth-child(1)::before{
+  content:'delivery';
+}
+
+main section .matrix-block:hover{
+  padding-left: 180px;
+}
+
+main section .block td{
   border: 1px solid black;
   border-radius: 2em;
   padding-top: 1em;
   padding-bottom: 1em;
   margin:0px;
+  font-size: 1.5em;
   background: white;
+  width:60px;
 }
 
-main section .block p, main section .block td{
+main section .block p, main section .block fieldset{
   border: 1px solid black;
   border-radius: 2em;
   padding: 1em;
@@ -273,22 +328,14 @@ main section .block p, main section .block td{
   background: white;
 }
 
-main section .block td{
-  width: 10px;
+main section .block fieldset label{
+  font-family: "NeutrafaceTextBold";
 }
+
 
 main section .block th{
   position: relative;
-}
-
-main section .block td:nth-child(1){
-  background: none;
-  border: 1px none;
-  font-family: "NeutrafaceTextBold";
-  color: white;
-  font-size: 1.5em;
-  padding: 0px;
-  text-shadow: 1px 1px black, -1px 1px black, 1px -1px black, -1px -1px black;
+  overflow:hidden;
 }
 
 main{
