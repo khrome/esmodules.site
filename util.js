@@ -195,14 +195,24 @@ export const setGrid = (parameters, siteName='[not set]')=>{
                         }
                         break;
                     case 'unsupported':
-                        grid(browserName, "import").innerHTML = 'X';
-                        grid(browserName, "importmap").innerHTML = 'X';
+                        grid(browserName, "import").innerHTML = '✗';
+                        grid(browserName, "importmap").innerHTML = '✗';
                         info += `${browserName} does not support ${siteName} and no alternative is provided\n`;
                         mapinfo +=`${browserName} does not support ${siteName} and no alternative is provided\n`;
                         break;
                     case 'fallback':
-                        grid(browserName, "import").innerHTML = '√';
-                        grid(browserName, "importmap").innerHTML = '√';
+                        if(parameters.support === 'redirect'){
+                               grid(browserName, "import").innerHTML = '🔄';
+                               grid(browserName, "importmap").innerHTML = '🔄';
+                        }else{
+                            if(parameters.support === 'inline'){
+                                grid(browserName, "import").innerHTML = '🔀';
+                                grid(browserName, "importmap").innerHTML = '🔀';
+                            }else{
+                                grid(browserName, "import").innerHTML = '√';
+                                grid(browserName, "importmap").innerHTML = '√';
+                            }
+                        }
                         info += `${browserName} does not support ${siteName}, but the user will recieve a legacy site in it's place.\n`;
                         mapinfo +=`${browserName} does not support ${siteName}, but the user will recieve a legacy site in it's place.\n`;
                         break;

@@ -258,7 +258,7 @@ main section .block{
   background-size: 6px 6px;
   transition: padding-left 2s;
 }
-main section .block:hover tbody tr:nth-child(1) td:nth-child(1){
+main section .block.detail tbody tr:nth-child(1) td:nth-child(1){
   transition: all 2s;
 }
 /* import, importmap, delivery*/
@@ -275,7 +275,25 @@ th img{
   height: 70px;
 }
 
-main section .block:hover tbody tr td:nth-child(1)::before{
+.info div{
+  background-color: #9999FF;
+  border: 1px solid black;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  display:inline-block;
+  border-radius: 1em;
+  position: absolute;;
+}
+
+.info{
+  width: 100%;
+  text-align: right;
+  position: relative;
+  margin-left: -1em;
+}
+
+main section .block.detail tbody tr td:nth-child(1)::before{
   width: 150px;
   text-align: right;
   display: block;
@@ -293,19 +311,19 @@ main section .block:hover tbody tr td:nth-child(1)::before{
   text-shadow: 2px 2px black, -2px 2px black, 2px -2px black, -2px -2px black;
 }
 
-main section .block:hover tbody tr:nth-child(1) td:nth-child(1)::before{
+main section .block.detail tbody tr:nth-child(1) td:nth-child(1)::before{
   content:'import';
 }
 
-main section .block:hover tbody tr:nth-child(2) td:nth-child(1)::before{
+main section .block.detail tbody tr:nth-child(2) td:nth-child(1)::before{
   content:'importmaps';
 }
 
-main section .block:hover tbody tr:nth-child(3) td:nth-child(1)::before{
+main section .block.detail tbody tr:nth-child(3) td:nth-child(1)::before{
   content:'delivery';
 }
 
-main section .matrix-block:hover{
+main section .matrix-block.detail{
   padding-left: 180px;
 }
 

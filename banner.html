@@ -41,6 +41,7 @@
                     }
                 </script>
                 <div class="block matrix-block">
+                    <div class="info"><div>ℹ</div></div>
                     <table id="matrix">
                         <thead>
                             <tr>
@@ -146,6 +147,15 @@
                     
                     // SETUP GRID
                     setGrid(parameters);
+                    
+                    const el = document.getElementsByClassName('info')[0];
+                    const blockEl = document.getElementsByClassName('block')[0];
+                    el.addEventListener('mouseover', (e)=>{
+                        blockEl.classList.add('detail');
+                    });
+                    el.addEventListener('mouseout', (e)=>{
+                        blockEl.classList.remove('detail');
+                    });
                     
                     //SETUP CODE EDITORS
                     const elements = document.getElementsByClassName('code');
