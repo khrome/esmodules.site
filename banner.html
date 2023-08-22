@@ -29,11 +29,11 @@
                     const header = document.getElementById('sectionheader');
                     try{
                         const referrer = new URL(document.referrer);
-                        if(localdomains.indexOf(referrer.hostname) === -1){
-                            console.log('local', referrer.hostname, window.parameters);
+                        if(localdomains.indexOf(referrer.hostname) !== -1){
+                            console.log('local', referrer, window.parameters);
                             header.innerHTML = `Your settings:`;
                         }else{
-                            console.log('not', referrer.hostname, window.parameters);
+                            console.log('not', referrer.hostname, window.parameters, document.referrer);
                             header.innerHTML = `${window.location.hostname} is delivered using:`;
                         }
                     }catch(ex){

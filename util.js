@@ -232,7 +232,56 @@ export const setGrid = (parameters, siteName='[not set]')=>{
                     bodyEl.innerHTML = mapinfo[0].toUpperCase()+mapinfo.substring(1);
                 });
             }else{
-                
+                let info = '';
+                let mapinfo = '';
+                if(parameters.mechanism === 'compiled'){
+                    switch(parameters.browsers[browserName]){
+                        case 'supported':
+                            grid(browserName, "import").innerHTML = '✔';
+                            grid(browserName, "importmap").innerHTML = '✔';
+                            info += `${browserName} uses [format] output compiled from native imports for ${siteName}.\n`;
+                            mapinfo += `${browserName} uses input maps with ${siteName} allowing for various endpoints to resolve the individual modules natively, on demand.\n`;
+                            break;
+                        case 'unsupported':
+                            grid(browserName, "import").innerHTML = '✗';
+                            grid(browserName, "importmap").innerHTML = '✗';
+                            info += `${browserName} does not support ${siteName} and no alternative is provided\n`;
+                            mapinfo +=`${browserName} does not support ${siteName} and no alternative is provided\n`;
+                            break;
+                        case 'fallback':
+                            if(parameters.support === 'redirect'){
+                                   grid(browserName, "import").innerHTML = '🔄';
+                                   grid(browserName, "importmap").innerHTML = '🔄';
+                            }else{
+                                if(parameters.support === 'inline'){
+                                    grid(browserName, "import").innerHTML = '🔀';
+                                    grid(browserName, "importmap").innerHTML = '🔀';
+                                }else{
+                                    grid(browserName, "import").innerHTML = '√';
+                                    grid(browserName, "importmap").innerHTML = '√';
+                                }
+                            }
+                            info += `${browserName} does not support ${siteName}, but the user will recieve a legacy site in it's place.\n`;
+                            mapinfo +=`${browserName} does not support ${siteName}, but the user will recieve a legacy site in it's place.\n`;
+                            break;
+                        case 'untested':
+                            grid(browserName, "import").innerHTML = '❓';
+                            grid(browserName, "importmap").innerHTML = '❓';
+                            info += `${browserName} has not been tested with ${siteName}, if you choose to test it, please file an issue with the results and the maintainer can update the corresponding status.\n`;
+                            mapinfo +=`${browserName} has not been tested with ${siteName}, if you choose to test it, please file an issue with the results and the maintainer can update the corresponding status.\n`;
+                            break;
+                    }
+                    grid(browserName, "import").addEventListener('mouseover', (e)=>{
+                        titleEl.innerHTML = browserName +' import';
+                        bodyEl.innerHTML = info[0].toUpperCase()+info.substring(1);
+                    });
+                    grid(browserName, "importmap").addEventListener('mouseover', (e)=>{
+                        titleEl.innerHTML = browserName +' import map';
+                        bodyEl.innerHTML = mapinfo[0].toUpperCase()+mapinfo.substring(1);
+                    });
+                }else{
+                    
+                }
             }
             
         }
@@ -259,11 +308,36 @@ export const setGrid = (parameters, siteName='[not set]')=>{
                         el.innerHTML = '🚩'; // 🔃
                         break;
                     case 'compiled':
-                        if(parameters.toolchain){
-                            
-                            el.innerHTML = '✔';
+                        if(parameters.toolchain && parameters.toolchain !== 'n'){
+                            if(parameters.format){
+                                let format = parameters.format;
+                                switch(parameters.format){
+                                    case 'module': format = 'Native ES Module'; break;
+                                    case 'definition': format = 'UMD/AMD module'; break;
+                                    case 'global': format = 'global javascript'; break;
+                                    case 'namespaced': format = 'namespaced javascript'; break;
+                                }
+                                info = `${format} assets are produced by ${parameters.toolchain} for the ${browserName} deliverable from the original native modules.`;
+                                el.innerHTML = '✔';
+                            }else{
+                                el.innerHTML = '✔';
+                                info = `Compiled assets are produced for the output by ${parameters.toolchain} from the original source.`;
+                            }
                         }else{
-                            el.innerHTML = '✔';
+                            if(parameters.format){
+                                let format = parameters.format;
+                                switch(parameters.format){
+                                    case 'module': format = 'Native ES Module'; break;
+                                    case 'definition': format = 'UMD/AMD module'; break;
+                                    case 'global': format = 'global javascript'; break;
+                                    case 'namespaced': format = 'namespaced javascript'; break;
+                                }
+                                info = `${format} assets are produced for the ${browserName} deliverable from the original native modules.`;
+                                el.innerHTML = '✔';
+                            }else{
+                                el.innerHTML = '✔';
+                                info = `Compiled assets are produced for the ${browserName} output from th original source.`;
+                            }
                         }
                         break;
                 }

@@ -87,7 +87,7 @@
                                 <option value="u">Untested</option>
                             </select>
                             <p>
-                                The <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> browser produced by <a href="https://www.mozilla.org/">Mozilla</a>
+                                The <a href="https://nodejs.org/">Node.js</a> runtime produced by the<a href="https://openjsf.org/">OpenJS Foundation</a>.
                             </p>
                         </div>
                     </fieldset>
@@ -122,6 +122,14 @@
                                 <p>
                                     The target format you export for the browser.
                                 </p>
+                                <label for="br">Toolchain</label>
+                                <select id="br" name="br">
+                                    <option value="n">Not specified</option>
+                                    <option value="b">Babel</option>
+                                    <option value="w">Webpack</option>
+                                    <option value="r">Browserify</option>
+                                    <option value="p">Parcel</option>
+                                </select>
                             </div>
                             <label for="bd">Bundled</label>
                             <input id="bd" name="bd" type="checkbox">
@@ -130,7 +138,7 @@
                             </p>
                             <div id="bundled">
                                 <label for="br">Toolchain</label>
-                                <select id="br" name="ed">
+                                <select id="br" name="br">
                                     <option value="n">Not specified</option>
                                     <option value="b">Babel</option>
                                     <option value="w">Webpack</option>
