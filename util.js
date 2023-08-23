@@ -400,10 +400,10 @@ export const setGrid = (parameters, siteName='[not set]')=>{
     }
 }
 
-export const isLocalReview = (localdomains=['localhost'])=>{
+export const isLocalReview = (localdomains=['localhost'], context)=>{
     try{
-        const referrer = new URL(document.referrer);
-        console.log('REF', referrer)
+        const referrer = document.referrer?{}:new URL(document.referrer);
+        if(context) context.referrer = referrer;
         return (localdomains.indexOf(referrer.hostname) !== -1) && (
             referrer.pathname !== '/get.html' || referrer.pathname !== '/get'
         );
