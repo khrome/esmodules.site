@@ -44,7 +44,8 @@
                     if(window.isLocalMode){
                         header.innerHTML = `Your settings:`;
                     }else{
-                        header.innerHTML = `${window.location.hostname} is delivered using:`;
+                        const name = (document.referrer?{}:new URL(document.referrer)).hostname || 'This site';
+                        header.innerHTML = `${name} is delivered using:`;
                     }
                 </script>
                 <div class="block matrix-block">
