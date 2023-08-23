@@ -31,7 +31,7 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/http/http.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlembedded/htmlembedded.min.js"></script>
                 <script type="module">
-                    import { getConfig, isLocalReview } from './util.js';
+                    import { getConfig, isLocalReview, getReferrer } from './util.js';
                     const localdomains = [
                         'localhost', 
                         'www.esmodules.site', 
@@ -44,7 +44,7 @@
                     if(window.isLocalMode){
                         header.innerHTML = `Your settings:`;
                     }else{
-                        const name = (document.referrer?{}:new URL(document.referrer)).hostname || 'This site';
+                        const name = getReferrer().hostname || 'This site';
                         header.innerHTML = `${name} is delivered using:`;
                     }
                 </script>
@@ -152,12 +152,12 @@
                 </div></div>
                 <script type="module">
                     import { 
-                        setGrid, exampleCode, enableCodeControls 
+                        setGrid, exampleCode, enableCodeControls, getReferrer
                     } from './util.js';
                     
                     // SETUP GRID
-                    const referrer = new URL(document.referrer);
-                    setGrid(parameters, referrer.hostname);
+                    const referrer = getReferrer();
+                    setGrid(parameters, referrer.hostname || 'this site');
                     
                     const el = document.getElementsByClassName('info')[0];
                     const blockEl = document.getElementsByClassName('block')[0];
