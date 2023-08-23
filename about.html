@@ -27,7 +27,17 @@
     </head>
     <body>
         <script type="module"> import 'esmodule-banner'; </script>
-        <module-banner></module-banner>
+        <module-banner 
+            firefox="supported" 
+            chrome="supported" 
+            safari="supported" 
+            edge="supported" 
+            nodejs="supported" 
+            support="none" 
+            mechanism="import" 
+            toolchain="n" 
+            format="global"
+         ></module-banner>
         <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
         <main>
             <h1> About </h1>
@@ -43,10 +53,10 @@
                     Next I ported an old mootools canvas oriented image editing library I wrote a decade ago to vanillaJS + esmodules. This required I build <a href="https://github.com/environment-safe/canvas">an abstraction to bridge the canvas</a> available in the browser vs node.js as well as to wrapper some things for testing so we could have a single test file for everything. Additionally I wanted to be able to run the test in the all the supported browsers as well as in node and to have normal test runner output. This required me writing my own <a href="https://www.npmjs.com/package/@open-automaton/moka">mocha test runner</a> which could do the browser parts of this. This was <a href="https://khrome.github.io/image-booth/">successful</a>.
                 </p>
                 <p>
-                    Once this was done, I decided to rewrite some of my sites and GUI libraries using what I had learned in order to confirm this worked widely across browsers. As I was doing this, I realized there were no support sites to provide a banner, at the same time I could provide a consise support matrix, given the complexity of different scenarios and the user expectations. That was why I created this site. Hopefully it will become a community resource which is powered by community contributions, but until then I'm over here... porting all my libraries slowly to esmodules.
+                    Once this was done, I decided to rewrite some of my sites and GUI libraries using what I had learned in order to confirm this worked widely across browsers. As I was doing this, I realized there were no support sites to provide a banner or encourage adoption. These were services  that were present for the transition to css (<a href="https://www.csszengarden.com/">CSS zen garden</a>), to html5 (html5.com (no longer active)) and webcomponents (<a href="https://www.webcomponents.org/">wecomponents.org</a>) (even RDF and OWL got more support than vanilla es modules). At the same time I could provide a concise support matrix, given the complexity of different scenarios and the user expectations. That was why I created this site. Hopefully it will become a community resource which is powered by community contributions, but until then I'm over here... porting all my libraries slowly to esmodules.
                 </p>
                 <p>
-                    -Abbey
+                    - <a href="https://www.abbeyhawksparrow.com/">Abbey Hawk Sparrow</a>
                 </p>
             </section>
             <footer>

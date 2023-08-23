@@ -11,33 +11,40 @@
     </head>
     <body>
         <script type="module"> import 'esmodule-banner'; </script>
-        <module-banner></module-banner>
+        <module-banner 
+            firefox="supported" 
+            chrome="supported" 
+            safari="supported" 
+            edge="supported" 
+            nodejs="supported" 
+            support="none" 
+            mechanism="import" 
+            toolchain="n" 
+            format="global"
+         ></module-banner>
         <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
         <main>
             <h1>ES Modules</h1>
             <section>
-                <h2 id="sectionheader">Get an ES Module banner</h2>
+                <h2 id="sectionheader" class="block-title" style="margin-left:1.3em; margin-top:-0.8em;">Get an ES Module banner</h2>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/http/http.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/htmlembedded/htmlembedded.min.js"></script>
                 <script type="module">
-                    import { getConfig } from './util.js';
-                    const localdomains = ['localhost', 'esmodules.site', 'khrome.github.io'];
+                    import { getConfig, isLocalReview } from './util.js';
+                    const localdomains = [
+                        'localhost', 
+                        'www.esmodules.site', 
+                        'esmodules.site', 
+                        'khrome.github.io'
+                    ];
                     window.parameters = getConfig(localdomains);
-                    //window.parameters = getConfig([ ]);
-                    
+                    window.isLocalMode = isLocalReview(localdomains);
                     const header = document.getElementById('sectionheader');
-                    try{
-                        const referrer = new URL(document.referrer);
-                        if(localdomains.indexOf(referrer.hostname) !== -1){
-                            console.log('local', referrer, window.parameters);
-                            header.innerHTML = `Your settings:`;
-                        }else{
-                            console.log('not', referrer.hostname, window.parameters, document.referrer);
-                            header.innerHTML = `${window.location.hostname} is delivered using:`;
-                        }
-                    }catch(ex){
-                        //no referrer?
+                    if(window.isLocalMode){
+                        header.innerHTML = `Your settings:`;
+                    }else{
+                        header.innerHTML = `${window.location.hostname} is delivered using:`;
                     }
                 </script>
                 <div class="block matrix-block">
@@ -103,12 +110,12 @@
                     [overall summary TBD]
                 </p>
                 </div>
-                <div class="block">
+                <div id="code-controls" class="block">
                     <fieldset>
                         <label for="esribbon">Module Ribbon</label>
                         <input name="esribbon" id="esribbon" type="checkbox">
                         <label for="bothribbons">Module + Source</label>
-                        <input name="bothribbons" id="bothribbons" type="checkbox">
+                        <input name="bothribbons" checked id="bothribbons" type="checkbox">
                         <div style="float:right">
                             <label for="isbrowser">HTML</label>
                             <input name="isbrowser" id="isbrowser" type="checkbox">
@@ -122,8 +129,8 @@
                     </fieldset>
                 </div>
                 <div id="local">
-                    <div class="block"><h2 class="block-title">Get Both Ribbons</h2><p>
-                            The es modules ribbon is built so it can coexist with existing, popular "fork me" ribbons, but it can also produce one without another library. Copy the following code onto your page to display both a fork me ribbon and and an es modules ribbon.
+                    <div id="both-ribbons" class="block"><h2 class="block-title">Get Both Ribbons</h2><p>
+                            The es modules ribbon is built so it can coexist with existing, popular "fork me" ribbons, but it can also produce one without another library. Copy the following code onto your page to display both a fork me ribbon and an es modules ribbon.
                         </p>
                         <div class="codewrap"><div 
                             class="code" 
@@ -132,7 +139,7 @@
                         ></div></div>
                         <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
                     </div>
-                    <div class="block"><h2 class="block-title">Get a Ribbon</h2><p>
+                    <div id="module-ribbon" class="block"><h2 class="block-title">Get a Ribbon</h2><p>
                             This code is for just the standalone es modules ribbon, with the settings you provided (Though it's spacing is such that it is compatible with other ribbons).
                         </p>
                         <div class="codewrap"><div 
@@ -143,20 +150,22 @@
                     <div class="floating-control foot-attached"><input name="submit" type="submit" value=""></div>
                 </div></div>
                 <script type="module">
-                    import { setGrid, exampleCode } from './util.js';
+                    import { 
+                        setGrid, exampleCode, enableCodeControls 
+                    } from './util.js';
                     
                     // SETUP GRID
-                    setGrid(parameters);
+                    const referrer = new URL(document.referrer);
+                    setGrid(parameters, referrer.hostname);
                     
                     const el = document.getElementsByClassName('info')[0];
                     const blockEl = document.getElementsByClassName('block')[0];
-                    el.addEventListener('mouseover', (e)=>{
-                        blockEl.classList.add('detail');
-                    });
-                    el.addEventListener('mouseout', (e)=>{
-                        blockEl.classList.remove('detail');
-                    });
-                    
+                    el.addEventListener('mouseover', (e)=> blockEl.classList.add('detail') );
+                    el.addEventListener('mouseout', (e)=> blockEl.classList.remove('detail') );
+                    //SETUP CODE CONTROLS
+                    const updateCodeState = enableCodeControls(
+                        window.isLocalMode
+                    );
                     //SETUP CODE EDITORS
                     const elements = document.getElementsByClassName('code');
                     CodeMirror.commands.autocomplete = function(cm) {
@@ -184,6 +193,7 @@
                                 )
                             });
                         });
+                        updateCodeState();
                     };
                 </script>
             </section>

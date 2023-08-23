@@ -344,6 +344,7 @@ export const setGrid = (parameters, siteName='[not set]')=>{
                 break;
             case 'unsupported':
                 el.innerHTML = '⛔';
+                info = `No Support.`;
                 break;
             case 'untested':
                 el.innerHTML = '⚠';
@@ -398,3 +399,53 @@ export const setGrid = (parameters, siteName='[not set]')=>{
         }
     }
 }
+
+export const isLocalReview = (localdomains=['localhost'])=>{
+    try{
+        const referrer = new URL(document.referrer);
+        console.log('REF', referrer)
+        return (localdomains.indexOf(referrer.hostname) !== -1) && (
+            referrer.pathname !== '/get.html' || referrer.pathname !== '/get'
+        );
+    }catch(ex){
+        return false;
+    }
+}
+
+export const enableCodeControls = (isLocalMode)=>{
+    const codeControlsEl = document.getElementById('code-controls');
+    if(isLocalMode){
+        const moduleCheckEl = document.getElementById('esribbon');
+        const bothCheckEl = document.getElementById('bothribbons');
+        const updateCodeState = ()=>{
+            const moduleEl = document.getElementById('module-ribbon');
+            const bothEl = document.getElementById('both-ribbons');
+            if(moduleCheckEl.checked){
+                if(moduleEl.style.display === 'none' || !moduleEl.style.display){
+                    moduleEl.style.display = 'block';
+                }
+            }else{
+                if(moduleEl.style.display === 'block' || !moduleEl.style.display){
+                    moduleEl.style.display = 'none';
+                }
+            }
+            if(bothCheckEl.checked){
+                if(bothEl.style.display === 'none' || !bothEl.style.display){
+                    bothEl.style.display = 'block';
+                }
+            }else{
+                if(bothEl.style.display === 'block' || !bothEl.style.display){
+                    bothEl.style.display = 'none';
+                }
+            }
+        }
+        moduleCheckEl.addEventListener('change', updateCodeState);
+        bothCheckEl.addEventListener('change', updateCodeState);
+        return updateCodeState;
+    }else{
+        document.getElementById('module-ribbon').style.display = 'none';
+        document.getElementById('both-ribbons').style.display = 'none';
+        codeControlsEl.style.display = 'none';
+        return ()=>{};
+    }
+};
