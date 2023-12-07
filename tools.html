@@ -40,24 +40,17 @@
          ></module-banner>
         <fork-banner url="https://github.com/khrome/esmodules.site"></fork-banner>
         <main>
-            <h1> Formats </h1>
+            <h1> Tools </h1>
             <section>
-                <h2>global</h2>
-                <p>
-                    The original way to import javascript code was a global hook (execute on include or inline) or a namespaced global (where a global variable is set as a side effect of inclusion). Until bundling became popular, this was still prevalent and even today, many legacy codebases use this directly or via CDN.
-                </p>
-                <h2>AMD/UMD</h2>
-                <p>
-                    <a href="https://requirejs.org/docs/whyamd.html">AMD</a> is the module format used by the vernerable require.js library, while <a href="https://github.com/umdjs/umd">UMD</a> is a modern polymorphic definition which could support AMD, commonjs and namespaced globals.
-                </p>
-                <h2>commonjs</h2>
-                <p>
-                    <a href="https://nodejs.org/docs/latest/api/modules.html#modules-commonjs-modules">commonjs</a> ia the original native node.js module format. It was created to solve <a href="https://www.blueskyonmars.com/2009/01/29/what-server-side-javascript-needs/">a set of problems</a> common to most apps of the era.
-                </p>
-                <h2>esmodules</h2>
-                <p>
-                    <a href="https://esmodules.site">ES Modules</a> is the first <a href="https://github.com/tc39">standards body</a> driven module system to encompass all of javascript and as such aims to both provide a formal system for browsers as well as replace commonjs for node.js (and serve as the basis for deno).
-                </p>
+                <h2> Tools </h2>
+                <p>Currently there are a lot of rough edges and missing pieces that you may encounter some sharp edges. These are the libraries those of us who have come before have built to make our lives easier.</p>
+                <ul>
+                    <li><a href="https://github.com/environment-safe">@environment-safe</a> - A suite of browser and node compatible abstractions for use writing logic that runs everywhere without build.</li>
+                    <li><a href="https://www.npmjs.com/package/@open-automaton/moka">moka</a> - A mocha test runner that supports importmap generation, browser execution and more.</li>
+                    <li><a href="https://generator.jspm.io/">create importmap</a> - A webservice to generate import maps</li>
+                    <li><a href="https://www.npmjs.com/package/wing-kong">wing-kong</a> - A javascript library and CL npm to statically generate importmaps</li>
+                    <li><a href="https://github.com/chase-moskal/importly">importly</a> - A commandline typescript app to generate an importmap</li>
+                </ul>
             </section>
             <footer>
                 <div>

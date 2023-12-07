@@ -373,7 +373,7 @@ footer{
 }
 footer div{
     flex-direction: row;
-    min-width:25%;
+    min-width:33%;
 }
 
 footer li{
@@ -381,5 +381,5 @@ footer li{
 }
 
 footer ul{
-    padding-left:0;
+    padding-left:10px;
 }
